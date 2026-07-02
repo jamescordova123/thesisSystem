@@ -3,7 +3,6 @@ import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
     Dialog,
     DialogClose,
@@ -43,7 +42,7 @@ export default function CreateUserModal({ availableRoles, children }: Props) {
                                 <DialogTitle>Create a new user</DialogTitle>
                                 <DialogDescription>
                                     Add a new user account and assign their
-                                    roles.
+                                    role.
                                 </DialogDescription>
                             </DialogHeader>
 
@@ -101,17 +100,22 @@ export default function CreateUserModal({ availableRoles, children }: Props) {
                                 </div>
 
                                 <div className="grid gap-2">
-                                    <Label>Roles</Label>
+                                    <Label>Role</Label>
                                     <div className="space-y-2">
                                         {availableRoles.map((role) => (
                                             <div
                                                 key={role.value}
                                                 className="flex items-center gap-3"
                                             >
-                                                <Checkbox
+                                                <input
+                                                    type="radio"
                                                     id={`new-user-role-${role.value}`}
-                                                    name="roles[]"
+                                                    name="role"
                                                     value={role.value}
+                                                    defaultChecked={
+                                                        role.value === 'student'
+                                                    }
+                                                    className="h-4 w-4 border-input text-primary focus:ring-ring"
                                                     data-test={`create-user-role-${role.value}`}
                                                 />
                                                 <Label
@@ -123,7 +127,7 @@ export default function CreateUserModal({ availableRoles, children }: Props) {
                                             </div>
                                         ))}
                                     </div>
-                                    <InputError message={errors.roles} />
+                                    <InputError message={errors.role} />
                                 </div>
                             </div>
 

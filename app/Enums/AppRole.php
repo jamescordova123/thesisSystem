@@ -5,9 +5,9 @@ namespace App\Enums;
 enum AppRole: string
 {
     case SuperAdmin = 'super-admin';
-    case Admin = 'admin';
+    case Registrar = 'registrar';
+    case Cashier = 'cashier';
     case Student = 'student';
-    case Advisor = 'advisor';
 
     /**
      * Get the display label for the role.
@@ -16,9 +16,9 @@ enum AppRole: string
     {
         return match ($this) {
             self::SuperAdmin => 'Super Admin',
-            self::Admin => 'Admin',
+            self::Registrar => 'Registrar',
+            self::Cashier => 'Cashier',
             self::Student => 'Student',
-            self::Advisor => 'Advisor',
         };
     }
 

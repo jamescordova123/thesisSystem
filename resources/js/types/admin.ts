@@ -1,11 +1,12 @@
-export type AppRoleValue = 'super-admin' | 'admin' | 'student' | 'advisor';
+export type AppRoleValue = 'super-admin' | 'registrar' | 'cashier' | 'student';
 
 export type AppPermissionValue =
     | 'users.manage'
     | 'theses.manage'
     | 'theses.view'
     | 'theses.submit'
-    | 'theses.review';
+    | 'theses.review'
+    | 'announcements.manage';
 
 export type AppRoleOption = {
     value: AppRoleValue;
@@ -22,7 +23,7 @@ export type AdminUser = {
     id: number;
     name: string;
     email: string;
-    roles: AppRoleOption[];
+    role: AppRoleOption | null;
 };
 
 export type AdminRole = {
@@ -37,4 +38,37 @@ export type AppPermissions = {
     canViewTheses: boolean;
     canSubmitThesis: boolean;
     canReviewThesis: boolean;
+    canManageAnnouncements: boolean;
+};
+
+export type AnnouncementRecipient = {
+    id: number;
+    name: string;
+    email: string;
+    read_at: string | null;
+};
+
+export type AdminAnnouncement = {
+    id: number;
+    title: string;
+    body: string;
+    image_url: string | null;
+    send_to_all: boolean;
+    is_published: boolean;
+    published_at: string | null;
+    created_at: string;
+    author: string | null;
+    recipients_count: number;
+    read_count: number;
+    recipient_ids: number[];
+};
+
+export type UserAnnouncement = {
+    id: number;
+    title: string;
+    body: string;
+    image_url: string | null;
+    published_at: string | null;
+    author: string | null;
+    read_at: string | null;
 };

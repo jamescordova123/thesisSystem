@@ -2,10 +2,13 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Enums\AppRole;
 use App\Enums\TeamRole;
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\User;
+use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -45,6 +48,8 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register()
     {
+        $this->seed(RoleAndPermissionSeeder::class);
+
         $response = $this->post(route('register.store'), [
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -55,6 +60,9 @@ class RegistrationTest extends TestCase
         $this->assertAuthenticated();
 
         $user = User::where('email', 'test@example.com')->first();
+        $this->assertEquals(Role::idFor(AppRole::Student), $user->role_id);
+        $this->assertTrue($user->hasRole(AppRole::Student->value));
+        $this->assertEquals(AppRole::Student->value, $user->role->name);
         $response->assertRedirect(route('dashboard'));
     }
 }

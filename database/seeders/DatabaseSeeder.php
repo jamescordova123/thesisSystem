@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\AppRole;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,7 +25,7 @@ class DatabaseSeeder extends Seeder
             ->create([
                 'name' => 'Super Admin',
                 'email' => 'superadmin@example.com',
-            ])
-            ->assignRole(AppRole::SuperAdmin->value);
+                'role_id' => Role::idFor(AppRole::SuperAdmin),
+            ]);
     }
 }

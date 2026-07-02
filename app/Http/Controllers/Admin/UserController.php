@@ -7,6 +7,7 @@ use App\Enums\AppRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRolesRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class UserController extends Controller
     {
         return Inertia::render('admin/users/index', [
             'users' => User::query()
-                ->with('roles')
+                ->with('role')
                 ->orderBy('name')
                 ->get()
                 ->map(fn (User $user) => $this->toUserPayload($user)),
@@ -41,9 +42,8 @@ class UserController extends Controller
                 'name' => $request->validated('name'),
                 'email' => $request->validated('email'),
                 'password' => $request->validated('password'),
+                'role_id' => Role::findByName($request->validated('role'), 'web')->id,
             ]);
-
-            $user->syncRoles($request->validated('roles'));
 
             $createTeam->handle($user, $user->name."'s Team", isPersonal: true);
         });
@@ -59,7 +59,7 @@ class UserController extends Controller
     public function edit(User $user): Response
     {
         return Inertia::render('admin/users/edit', [
-            'user' => $this->toUserPayload($user->load('roles')),
+            'user' => $this->toUserPayload($user->load('role')),
             'availableRoles' => AppRole::options(),
         ]);
     }
@@ -69,7 +69,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRolesRequest $request, User $user): RedirectResponse
     {
-        $user->syncRoles($request->validated('roles'));
+        $user->update([
+            'role_id' => Role::findByName($request->validated('role'), 'web')->id,
+        ]);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('User roles updated.')]);
 
@@ -85,14 +87,20 @@ class UserController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'roles' => $user->roles->map(function ($role) {
-                $appRole = AppRole::tryFrom($role->name);
+            'role' => $user->role ? $this->toRoleOption($user->role->name) : null,
+        ];
+    }
 
-                return [
-                    'value' => $role->name,
-                    'label' => $appRole?->label() ?? ucfirst($role->name),
-                ];
-            })->values()->all(),
+    /**
+     * @return array{value: string, label: string}
+     */
+    private function toRoleOption(string $roleName): array
+    {
+        $appRole = AppRole::tryFrom($roleName);
+
+        return [
+            'value' => $roleName,
+            'label' => $appRole?->label() ?? ucfirst($roleName),
         ];
     }
 }

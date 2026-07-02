@@ -18,6 +18,7 @@ declare module '@inertiajs/core' {
             sidebarOpen: boolean;
             currentTeam: Team | null;
             teams: Team[];
+            announcements: { unread: number } | null;
             [key: string]: unknown;
         };
     }

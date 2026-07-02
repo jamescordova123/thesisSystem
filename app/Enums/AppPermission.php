@@ -9,6 +9,7 @@ enum AppPermission: string
     case ViewTheses = 'theses.view';
     case SubmitThesis = 'theses.submit';
     case ReviewThesis = 'theses.review';
+    case ManageAnnouncements = 'announcements.manage';
 
     /**
      * Get the display label for the permission.
@@ -21,6 +22,7 @@ enum AppPermission: string
             self::ViewTheses => 'View theses',
             self::SubmitThesis => 'Submit thesis',
             self::ReviewThesis => 'Review thesis',
+            self::ManageAnnouncements => 'Manage announcements',
         };
     }
 
