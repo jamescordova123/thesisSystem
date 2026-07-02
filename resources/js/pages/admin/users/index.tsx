@@ -53,14 +53,14 @@ export default function UsersIndex({ users, availableRoles }: Props) {
                                     {user.email}
                                 </div>
                                 <div className="mt-2 flex flex-wrap gap-2">
-                                    {user.roles.map((role) => (
+                                    {user.role ? (
                                         <Badge
-                                            key={role.value}
+                                            key={user.role.value}
                                             variant="secondary"
                                         >
-                                            {role.label}
+                                            {user.role.label}
                                         </Badge>
-                                    ))}
+                                    ) : null}
                                 </div>
                             </div>
 

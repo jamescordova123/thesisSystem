@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Student\StudentInformationController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
@@ -11,11 +13,17 @@ Route::prefix('{current_team}')
     ->middleware(['auth', 'verified', EnsureTeamMembership::class])
     ->group(function () {
         Route::get('dashboard', DashboardController::class)->name('dashboard');
+        Route::get('information-sheet', [StudentInformationController::class, 'edit'])->name('information-sheet.edit');
+        Route::post('information-sheet', [StudentInformationController::class, 'store'])->name('information-sheet.store');
     });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])->name('invitations.accept');
     Route::delete('invitations/{invitation}', [TeamInvitationController::class, 'decline'])->name('invitations.decline');
+
+    Route::get('announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+    Route::post('announcements/read-all', [AnnouncementController::class, 'markAllAsRead'])->name('announcements.read-all');
+    Route::post('announcements/{announcement}/read', [AnnouncementController::class, 'markAsRead'])->name('announcements.read');
 });
 
 require __DIR__.'/settings.php';

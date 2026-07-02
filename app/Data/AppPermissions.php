@@ -10,6 +10,7 @@ readonly class AppPermissions
         public bool $canViewTheses,
         public bool $canSubmitThesis,
         public bool $canReviewThesis,
+        public bool $canManageAnnouncements,
     ) {
         //
     }

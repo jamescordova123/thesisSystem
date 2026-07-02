@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, Shield } from 'lucide-react';
+import { BookOpen, ClipboardList, FolderGit2, LayoutGrid, Megaphone, Shield } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -15,6 +15,8 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as announcements } from '@/routes/announcements';
+import { edit as informationSheet } from '@/routes/information-sheet';
 import { index as adminUsers } from '@/routes/admin/users';
 import type { NavItem } from '@/types';
 
@@ -30,6 +32,20 @@ export function AppSidebar() {
             href: dashboardUrl,
             icon: LayoutGrid,
         },
+        {
+            title: 'Announcements',
+            href: announcements(),
+            icon: Megaphone,
+        },
+        ...(page.props.can?.canSubmitThesis && page.props.currentTeam
+            ? [
+                  {
+                      title: 'My Information Sheet',
+                      href: informationSheet(page.props.currentTeam.slug),
+                      icon: ClipboardList,
+                  },
+              ]
+            : []),
         ...(page.props.can?.canManageUsers
             ? [
                   {

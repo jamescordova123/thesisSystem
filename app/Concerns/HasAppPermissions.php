@@ -18,6 +18,7 @@ trait HasAppPermissions
             canViewTheses: $this->can(AppPermission::ViewTheses->value),
             canSubmitThesis: $this->can(AppPermission::SubmitThesis->value),
             canReviewThesis: $this->can(AppPermission::ReviewThesis->value),
+            canManageAnnouncements: $this->can(AppPermission::ManageAnnouncements->value),
         );
     }
 }

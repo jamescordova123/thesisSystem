@@ -26,8 +26,7 @@ class UpdateUserRolesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roles' => ['required', 'array', 'min:1'],
-            'roles.*' => ['required', 'string', Rule::in(array_column(AppRole::options(), 'value'))],
+            'role' => ['required', 'string', Rule::in(array_column(AppRole::options(), 'value'))],
         ];
     }
 }

@@ -2,7 +2,6 @@ import { Form, Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { edit, index, update } from '@/routes/admin/users';
 import type { AdminUser, AppRoleOption } from '@/types';
@@ -13,8 +12,6 @@ type Props = {
 };
 
 export default function UserEdit({ user, availableRoles }: Props) {
-    const assignedRoles = new Set(user.roles.map((role) => role.value));
-
     return (
         <>
             <Head title={`Edit ${user.name}`} />
@@ -32,21 +29,24 @@ export default function UserEdit({ user, availableRoles }: Props) {
                     {({ errors, processing }) => (
                         <>
                             <div className="space-y-4">
-                                <Label>Roles</Label>
+                                <Label>Role</Label>
                                 <div className="space-y-3">
                                     {availableRoles.map((role) => (
                                         <div
                                             key={role.value}
                                             className="flex items-center gap-3"
                                         >
-                                            <Checkbox
+                                            <input
+                                                type="radio"
                                                 id={`role-${role.value}`}
-                                                name="roles[]"
+                                                name="role"
                                                 value={role.value}
-                                                defaultChecked={assignedRoles.has(
-                                                    role.value,
-                                                )}
-                                                data-test={`role-checkbox-${role.value}`}
+                                                defaultChecked={
+                                                    user.role?.value ===
+                                                    role.value
+                                                }
+                                                className="h-4 w-4 border-input text-primary focus:ring-ring"
+                                                data-test={`role-radio-${role.value}`}
                                             />
                                             <Label
                                                 htmlFor={`role-${role.value}`}
@@ -57,7 +57,7 @@ export default function UserEdit({ user, availableRoles }: Props) {
                                         </div>
                                     ))}
                                 </div>
-                                <InputError message={errors.roles} />
+                                <InputError message={errors.role} />
                             </div>
 
                             <div className="flex items-center gap-4">
@@ -66,7 +66,7 @@ export default function UserEdit({ user, availableRoles }: Props) {
                                     data-test="user-roles-save-button"
                                     disabled={processing}
                                 >
-                                    Save roles
+                                    Save role
                                 </Button>
                             </div>
                         </>
