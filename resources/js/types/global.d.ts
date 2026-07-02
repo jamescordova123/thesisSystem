@@ -1,3 +1,4 @@
+import type { AppPermissions } from '@/types/admin';
 import type { Auth } from '@/types/auth';
 import type { Team } from '@/types/teams';
 
@@ -13,6 +14,7 @@ declare module '@inertiajs/core' {
         sharedPageProps: {
             name: string;
             auth: Auth;
+            can: AppPermissions | null;
             sidebarOpen: boolean;
             currentTeam: Team | null;
             teams: Team[];
