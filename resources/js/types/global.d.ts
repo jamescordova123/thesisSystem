@@ -19,6 +19,7 @@ declare module '@inertiajs/core' {
             currentTeam: Team | null;
             teams: Team[];
             announcements: { unread: number } | null;
+            studentNotifications: { unread: number } | null;
             [key: string]: unknown;
         };
     }

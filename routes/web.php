@@ -24,7 +24,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
     Route::post('announcements/read-all', [AnnouncementController::class, 'markAllAsRead'])->name('announcements.read-all');
     Route::post('announcements/{announcement}/read', [AnnouncementController::class, 'markAsRead'])->name('announcements.read');
+
+    Route::get('notifications', [\App\Http\Controllers\Student\StudentNotificationController::class, 'index'])->name('notifications.index');
+    Route::post('notifications/read-all', [\App\Http\Controllers\Student\StudentNotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::post('notifications/{notification}/read', [\App\Http\Controllers\Student\StudentNotificationController::class, 'markAsRead'])->name('notifications.read');
 });
 
 require __DIR__.'/settings.php';
 require __DIR__.'/admin.php';
+require __DIR__.'/registrar.php';
+require __DIR__.'/cashier.php';

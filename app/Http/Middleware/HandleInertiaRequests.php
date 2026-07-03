@@ -53,6 +53,9 @@ class HandleInertiaRequests extends Middleware
                     ->wherePivotNull('read_at')
                     ->count(),
             ] : null,
+            'studentNotifications' => fn () => $user ? [
+                'unread' => $user->studentNotifications()->whereNull('read_at')->count(),
+            ] : null,
         ];
     }
 }

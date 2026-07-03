@@ -23,6 +23,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
+            'registrar' => \App\Http\Middleware\EnsureRegistrar::class,
+            'cashier' => \App\Http\Middleware\EnsureCashier::class,
         ]);
 
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);

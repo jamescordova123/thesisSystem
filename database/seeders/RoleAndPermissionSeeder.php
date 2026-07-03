@@ -29,14 +29,18 @@ class RoleAndPermissionSeeder extends Seeder
 
         Role::findOrCreate(AppRole::Registrar->value, 'web')
             ->syncPermissions([
-                AppPermission::ManageUsers->value,
-                AppPermission::ManageTheses->value,
+                AppPermission::AccessRegistrar->value,
+                AppPermission::ManageStudents->value,
+                AppPermission::ManageSections->value,
+                AppPermission::ManageEnrollments->value,
                 AppPermission::ViewTheses->value,
-                AppPermission::ReviewThesis->value,
             ]);
 
         Role::findOrCreate(AppRole::Cashier->value, 'web')
             ->syncPermissions([
+                AppPermission::AccessCashier->value,
+                AppPermission::ManagePayments->value,
+                AppPermission::ManageCashierNotifications->value,
                 AppPermission::ViewTheses->value,
             ]);
 
