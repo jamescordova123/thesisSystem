@@ -6,7 +6,14 @@ export type AppPermissionValue =
     | 'theses.view'
     | 'theses.submit'
     | 'theses.review'
-    | 'announcements.manage';
+    | 'announcements.manage'
+    | 'registrar.access'
+    | 'students.manage'
+    | 'sections.manage'
+    | 'enrollments.manage'
+    | 'cashier.access'
+    | 'payments.manage'
+    | 'cashier.notifications';
 
 export type AppRoleOption = {
     value: AppRoleValue;
@@ -39,6 +46,13 @@ export type AppPermissions = {
     canSubmitThesis: boolean;
     canReviewThesis: boolean;
     canManageAnnouncements: boolean;
+    canAccessRegistrar: boolean;
+    canManageStudents: boolean;
+    canManageSections: boolean;
+    canManageEnrollments: boolean;
+    canAccessCashier: boolean;
+    canManagePayments: boolean;
+    canManageCashierNotifications: boolean;
 };
 
 export type AnnouncementRecipient = {

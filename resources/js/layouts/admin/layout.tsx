@@ -1,18 +1,16 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { cn, toUrl } from '@/lib/utils';
-import { index as announcements } from '@/routes/admin/announcements';
 import { index as roles } from '@/routes/admin/roles';
 import { index as users } from '@/routes/admin/users';
 import type { NavItem } from '@/types';
 
 export default function AdminLayout({ children }: PropsWithChildren) {
     const { isCurrentOrParentUrl } = useCurrentUrl();
-    const page = usePage();
 
     const sidebarNavItems: NavItem[] = [
         {
@@ -25,15 +23,6 @@ export default function AdminLayout({ children }: PropsWithChildren) {
             href: roles(),
             icon: null,
         },
-        ...(page.props.can?.canManageAnnouncements
-            ? [
-                  {
-                      title: 'Announcements',
-                      href: announcements(),
-                      icon: null,
-                  },
-              ]
-            : []),
     ];
 
     return (

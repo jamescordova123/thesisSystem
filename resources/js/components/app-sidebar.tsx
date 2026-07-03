@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, ClipboardList, FolderGit2, LayoutGrid, Megaphone, Shield } from 'lucide-react';
+import { BookOpen, ClipboardList, FolderGit2, GraduationCap, LayoutGrid, Megaphone, Shield, Wallet } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -16,8 +16,12 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as announcements } from '@/routes/announcements';
+import { index as adminAnnouncements } from '@/routes/admin/announcements';
 import { edit as informationSheet } from '@/routes/information-sheet';
 import { index as adminUsers } from '@/routes/admin/users';
+import { dashboard as cashierDashboard } from '@/routes/cashier';
+import { dashboard as registrarDashboard } from '@/routes/registrar';
+import { index as studentNotifications } from '@/routes/notifications';
 import type { NavItem } from '@/types';
 
 export function AppSidebar() {
@@ -25,6 +29,9 @@ export function AppSidebar() {
     const dashboardUrl = page.props.currentTeam
         ? dashboard(page.props.currentTeam.slug)
         : '/';
+
+    const can = page.props.can;
+    const isAdmin = can?.canManageUsers ?? false;
 
     const mainNavItems: NavItem[] = [
         {
@@ -34,19 +41,44 @@ export function AppSidebar() {
         },
         {
             title: 'Announcements',
-            href: announcements(),
+            href: can?.canManageAnnouncements
+                ? adminAnnouncements()
+                : announcements(),
             icon: Megaphone,
         },
-        ...(page.props.can?.canSubmitThesis && page.props.currentTeam
+        ...(can?.canSubmitThesis && !isAdmin && page.props.currentTeam
             ? [
                   {
                       title: 'My Information Sheet',
                       href: informationSheet(page.props.currentTeam.slug),
                       icon: ClipboardList,
                   },
+                  {
+                      title: 'Notifications',
+                      href: studentNotifications(),
+                      icon: Megaphone,
+                  },
               ]
             : []),
-        ...(page.props.can?.canManageUsers
+        ...(can?.canAccessRegistrar && !isAdmin
+            ? [
+                  {
+                      title: 'Registrar',
+                      href: registrarDashboard(),
+                      icon: GraduationCap,
+                  },
+              ]
+            : []),
+        ...(can?.canAccessCashier && !isAdmin
+            ? [
+                  {
+                      title: 'Cashier',
+                      href: cashierDashboard(),
+                      icon: Wallet,
+                  },
+              ]
+            : []),
+        ...(isAdmin
             ? [
                   {
                       title: 'Administration',

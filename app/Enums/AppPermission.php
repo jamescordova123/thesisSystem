@@ -10,6 +10,13 @@ enum AppPermission: string
     case SubmitThesis = 'theses.submit';
     case ReviewThesis = 'theses.review';
     case ManageAnnouncements = 'announcements.manage';
+    case AccessRegistrar = 'registrar.access';
+    case ManageStudents = 'students.manage';
+    case ManageSections = 'sections.manage';
+    case ManageEnrollments = 'enrollments.manage';
+    case AccessCashier = 'cashier.access';
+    case ManagePayments = 'payments.manage';
+    case ManageCashierNotifications = 'cashier.notifications';
 
     /**
      * Get the display label for the permission.
@@ -23,6 +30,13 @@ enum AppPermission: string
             self::SubmitThesis => 'Submit thesis',
             self::ReviewThesis => 'Review thesis',
             self::ManageAnnouncements => 'Manage announcements',
+            self::AccessRegistrar => 'Access registrar dashboard',
+            self::ManageStudents => 'Manage students',
+            self::ManageSections => 'Manage sections',
+            self::ManageEnrollments => 'Manage enrollments',
+            self::AccessCashier => 'Access cashier dashboard',
+            self::ManagePayments => 'Manage payments',
+            self::ManageCashierNotifications => 'Manage cashier notifications',
         };
     }
 

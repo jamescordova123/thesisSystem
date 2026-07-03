@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\AppRole;
 use App\Concerns\HasAppPermissions;
 use App\Concerns\HasAppRole;
 use App\Concerns\HasTeams;
@@ -73,6 +74,26 @@ class User extends Authenticatable implements PasskeyUser
     public function studentInformation(): HasOne
     {
         return $this->hasOne(StudentInformation::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<StudentNotification, $this>
+     */
+    public function studentNotifications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StudentNotification::class);
+    }
+
+    /**
+     * Scope users that have the given application role.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder<User>  $query
+     */
+    public function scopeHavingAppRole($query, AppRole|string $role): void
+    {
+        $roleName = $role instanceof AppRole ? $role->value : $role;
+
+        $query->whereHas('roles', fn ($q) => $q->where('name', $roleName));
     }
 
     /**

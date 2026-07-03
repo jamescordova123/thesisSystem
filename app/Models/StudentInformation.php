@@ -5,12 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property int $user_id
- * @property string $school_year
+ * @property string|null $student_number
+ * @property int|null $program_id
+ * @property int|null $section_id
+ * @property int|null $year_level
+ * @property string $enrollment_status
+ * @property bool $is_archived
  * @property string $full_name
  * @property string $academic_program
  * @property string $status
@@ -35,12 +41,20 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read User $user
+ * @property-read Program|null $program
+ * @property-read Section|null $section
  */
 #[Fillable([
     'user_id',
+    'student_number',
     'school_year',
     'full_name',
     'academic_program',
+    'program_id',
+    'section_id',
+    'year_level',
+    'enrollment_status',
+    'is_archived',
     'status',
     'birthdate',
     'sex',
@@ -73,6 +87,24 @@ class StudentInformation extends Model
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<Program, $this> */
+    public function program(): BelongsTo
+    {
+        return $this->belongsTo(Program::class);
+    }
+
+    /** @return BelongsTo<Section, $this> */
+    public function section(): BelongsTo
+    {
+        return $this->belongsTo(Section::class);
+    }
+
+    /** @return HasMany<Enrollment, $this> */
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class, 'user_id', 'user_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -85,6 +117,8 @@ class StudentInformation extends Model
             'completion_date' => 'date',
             'age' => 'integer',
             'gwa' => 'decimal:2',
+            'is_archived' => 'boolean',
+            'year_level' => 'integer',
         ];
     }
 }
