@@ -1,17 +1,11 @@
-import AuthLayoutTemplate from '@/layouts/auth/auth-simple-layout';
+import AuthDiltrackLayout from '@/layouts/auth/auth-diltrack-layout';
 
 export default function AuthLayout({
-    title = '',
-    description = '',
     children,
 }: {
     title?: string;
     description?: string;
     children: React.ReactNode;
 }) {
-    return (
-        <AuthLayoutTemplate title={title} description={description}>
-            {children}
-        </AuthLayoutTemplate>
-    );
+    return <AuthDiltrackLayout>{children}</AuthDiltrackLayout>;
 }

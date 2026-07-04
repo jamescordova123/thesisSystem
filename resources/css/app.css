@@ -141,3 +141,44 @@
         @apply bg-background text-foreground;
     }
 }
+
+@layer utilities {
+    .font-diltrack-headline {
+        font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .font-diltrack-body {
+        font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .brand-gradient {
+        background: linear-gradient(
+            135deg,
+            rgba(128, 0, 0, 0.98) 0%,
+            rgba(128, 0, 0, 0.85) 40%,
+            rgba(128, 0, 0, 0.4) 100%
+        );
+    }
+
+    .hero-mesh {
+        background-image:
+            radial-gradient(at 0% 0%, hsla(0, 100%, 15%, 1) 0, transparent 50%),
+            radial-gradient(at 100% 100%, hsla(45, 100%, 50%, 0.15) 0, transparent 50%);
+    }
+
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .shadow-premium {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+    }
+
+    .shadow-brand {
+        box-shadow:
+            0 20px 25px -5px rgba(128, 0, 0, 0.15),
+            0 10px 10px -5px rgba(128, 0, 0, 0.06);
+    }
+}
